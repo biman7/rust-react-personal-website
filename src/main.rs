@@ -1,7 +1,10 @@
 use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use actix_files as fs;
 use serde::{Serialize};
+use std::env;
 
 mod utils;
+mod config;
 
 #[derive(Serialize)]
 struct HomePageProps {
@@ -19,11 +22,13 @@ async fn show_home() -> impl Responder {
     
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    config::init();
     HttpServer::new(|| {
         App::new()
-            .service(show_home)
+        .service(show_home)
+        .service(fs::Files::new("/", "./public").show_files_listing())
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("127.0.0.1", env::var("PORT").map_or(8080, |p| p.parse::<u16>().unwrap())))?
     .run()
     .await
 }
