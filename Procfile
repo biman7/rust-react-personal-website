@@ -1,1 +1,1 @@
-web: ./target/release/personal-website
+web: PORT=$PORT ./target/release/personal-website
