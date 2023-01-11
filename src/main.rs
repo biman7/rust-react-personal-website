@@ -28,7 +28,7 @@ async fn main() -> std::io::Result<()> {
         .service(show_home)
         .service(fs::Files::new("/", "./public").show_files_listing())
     })
-    .bind(("127.0.0.1", env::var("PORT").map_or(8080, |p| p.parse::<u16>().unwrap())))?
+    .bind((env::var("HOST").unwrap(), env::var("PORT").map_or(8080, |p| p.parse::<u16>().unwrap())))?
     .run()
     .await
 }
