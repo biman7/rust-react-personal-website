@@ -12,7 +12,10 @@ export default defineConfig(({ command }) => ({
     manifest: true,
     outDir: path.resolve(__dirname, "public/dist"),
     rollupOptions: {
-      input: ["src/main.jsx", "src/main.css"],
+      input: [
+        path.resolve(__dirname, "src/main.jsx"),
+        path.resolve(__dirname, "src/main.css"),
+      ],
     },
   },
 }));
